@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nss/Login.dart';
 
 final Dio dio = Dio();
-final String url = "http://192.168.1.108:8000"; // <-- ADD YOUR BASE URL HERE
+final String url = "http://192.168.1.142:8000"; // <-- ADD YOUR BASE URL HERE
 
 Future<void> Registerapi({
   required String firstname,

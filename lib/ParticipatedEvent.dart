@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nss/Api/loginapi.dart';
 import 'package:nss/Api/regiapi.dart';
+import 'package:nss/Feedback.dart';
 import 'package:nss/complaint.dart';
 
 class Participatedevent extends StatefulWidget {
@@ -91,20 +92,38 @@ class _ParticipatedeventState extends State<Participatedevent> {
                           Text(
                             "📅 Date: ${event['date'] != null ? event['date'].toString().substring(0, 10) : 'N/A'}",
                           ),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          Complaintpage(cid: event['_id']),
+                                    ),
+                                  );
+                                },
+                                child: Text('complaint'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          FeedbackPage(id: event['_id'],),
+                                    ),
+                                  );
+                                },
+                                child: Text('feedback'),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    trailing: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Complaintpage(cid: event['_id'],),
-                          ),
-                        );
-                      },
-                      child: Text('complaint'),
-                    ),
+                    
                   ),
                 );
               },
