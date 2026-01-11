@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nss/Api/regiapi.dart';
+import 'package:nss/EventImages.dart';
 
 class EventsPage extends StatefulWidget {
   EventsPage({super.key});
@@ -23,8 +24,9 @@ class _EventsPageState extends State<EventsPage> {
           eventss = response.data['events'];
         });
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Failed")));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Failed")));
       }
     } catch (e) {
       print(e);
@@ -51,15 +53,21 @@ class _EventsPageState extends State<EventsPage> {
         centerTitle: true,
       ),
       body: eventss.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(color: Colors.blue),
-            )
+          ? const Center(child: CircularProgressIndicator(color: Colors.blue))
           : ListView.builder(
               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               itemCount: eventss.length,
               itemBuilder: (context, index) {
                 final event = eventss[index];
-                return buildEventCard(event, context);
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Eventimages(eid: event['_id'].toString(),)),
+                    );
+                  },
+                  child: buildEventCard(event, context),
+                );
               },
             ),
     );
@@ -93,15 +101,19 @@ class _EventsPageState extends State<EventsPage> {
             // Date
             Row(
               children: [
-                const Icon(Icons.calendar_today,
-                    size: 19, color: Color(0xFF505050)),
+                const Icon(
+                  Icons.calendar_today,
+                  size: 19,
+                  color: Color(0xFF505050),
+                ),
                 const SizedBox(width: 8),
                 Text(
                   eventss["date"] ?? "",
                   style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black87),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
                 ),
               ],
             ),
@@ -111,16 +123,20 @@ class _EventsPageState extends State<EventsPage> {
             // Location
             Row(
               children: [
-                const Icon(Icons.location_on,
-                    size: 20, color: Color(0xFF505050)),
+                const Icon(
+                  Icons.location_on,
+                  size: 20,
+                  color: Color(0xFF505050),
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     eventss["place"] ?? "",
                     style: const TextStyle(
-                        fontSize: 15,
-                        color: Colors.black87,
-                        fontWeight: FontWeight.w500),
+                      fontSize: 15,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w500,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -130,19 +146,18 @@ class _EventsPageState extends State<EventsPage> {
             const SizedBox(height: 12),
 
             // Divider
-            Divider(
-              height: 20,
-              thickness: 1.1,
-              color: Colors.grey.shade300,
-            ),
+            Divider(height: 20, thickness: 1.1, color: Colors.grey.shade300),
 
             const SizedBox(height: 6),
 
             // Time row
             Row(
               children: [
-                const Icon(Icons.access_time_filled,
-                    size: 20, color: Color(0xFF505050)),
+                const Icon(
+                  Icons.access_time_filled,
+                  size: 20,
+                  color: Color(0xFF505050),
+                ),
                 const SizedBox(width: 8),
                 Text(
                   "Time : ${eventss["time"] ?? ""}",
@@ -152,6 +167,11 @@ class _EventsPageState extends State<EventsPage> {
                     color: Colors.black87,
                   ),
                 ),
+                SizedBox(width: 100,),
+                TextButton(onPressed: (){ Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Eventimages(eid: eventss['_id'].toString(),)),
+                    );}, child: Text('images'))
               ],
             ),
           ],

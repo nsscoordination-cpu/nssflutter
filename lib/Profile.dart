@@ -180,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
             CircleAvatar(
               radius: 60,
               backgroundImage: NetworkImage(
-                '$url/uploads/${profile[0]['photo']}',
+                '$url/uploads/students/${profile[0]['photo']}',
               ),
             ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nss/Attendence.dart';
+import 'package:nss/EventImages.dart';
 import 'package:nss/Events.dart';
 import 'package:nss/Home.dart';
 import 'package:nss/Login.dart';
@@ -7,6 +8,7 @@ import 'package:nss/Notification.dart';
 import 'package:nss/Profile.dart';
 import 'package:nss/Register.dart';
 import 'package:nss/Report.dart';
+import 'package:nss/StudentPerformance.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: LoginPage(),
+      home:LoginPage()
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:nss/Login.dart';
 import 'package:nss/Notification.dart';
 import 'package:nss/Profile.dart';
 import 'package:nss/Report.dart';
+import 'package:nss/StudentPerformance.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -206,6 +207,12 @@ class HomePage extends StatelessWidget {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (_) => ReportViewPage()));
                 }),
+                featureCard(Icons.accessibility_new_sharp, "Perfomance", accentColor,
+                    onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (_) => PerfomancePage()));
+                }),
+                
               ],
             ),
           ],

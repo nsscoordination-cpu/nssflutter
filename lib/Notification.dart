@@ -1,36 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:nss/Api/loginapi.dart';
+import 'package:nss/Api/regiapi.dart';
 
-class NotificationApp extends StatelessWidget {
+class NotificationApp extends StatefulWidget {
+  const NotificationApp({super.key});
+
+  @override
+  State<NotificationApp> createState() => _NotificationAppState();
+}
+
+class _NotificationAppState extends State<NotificationApp> {
   final Color primaryColor = const Color(0xFF1565C0);
   final Color accentColor = const Color(0xFF42A5F5);
 
-  // Dummy notification list as MAP
-  final List<Map<String, dynamic>> notifications = [
-    {
-      "title": "NSS Meeting",
-      "message": "Tomorrow at 10 AM in Seminar Hall.",
-      "time": "2 hours ago",
-      "icon": Icons.notifications
-    },
-    {
-      "title": "Attendance Reminder",
-      "message": "Submit today before 6 PM.",
-      "time": "1 day ago",
-      "icon": Icons.notifications
-    },
-    {
-      "title": "New Event: Clean-up Drive",
-      "message": "Join the campus clean-up this Saturday.",
-      "time": "3 days ago",
-      "icon": Icons.notifications
-    },
-    {
-      "title": "Profile Update",
-      "message": "Please update your volunteer details.",
-      "time": "1 week ago",
-      "icon": Icons.notifications
+  // Notification list
+  List<Map<String, dynamic>> notifications = [];
+
+  Future<void> get_notification() async {
+    try {
+      final response =
+          await dio.get('$url/api/student/getNotification/$regyear');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List data = response.data['notifications'] ?? [];
+
+        setState(() {
+          notifications =
+              data.map((e) => Map<String, dynamic>.from(e)).toList();
+        });
+      }
+    } catch (e) {
+      debugPrint("Notification error: $e");
     }
-  ];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    get_notification();
+  }
+
+  String formatDate(String date) {
+    final dt = DateTime.parse(date).toLocal();
+    return "${dt.day}-${dt.month}-${dt.year}  ${dt.hour}:${dt.minute.toString().padLeft(2, '0')}";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +54,14 @@ class NotificationApp extends StatelessWidget {
         title: const Text("Notifications"),
         centerTitle: true,
       ),
-
       body: notifications.isEmpty
           ? Center(
               child: Text(
                 "No Notifications Yet",
-                style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey[600],
+                ),
               ),
             )
           : ListView.builder(
@@ -63,34 +78,31 @@ class NotificationApp extends StatelessWidget {
                   ),
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(14),
-
                     leading: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: accentColor.withOpacity(0.15),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
-                        notif["icon"] ?? Icons.notifications,
+                        Icons.notifications,
                         color: accentColor,
                       ),
                     ),
-
                     title: Text(
-                      notif["title"],
+                      "New Notification",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: primaryColor,
                       ),
                     ),
-
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 6),
                         Text(
-                          notif["message"],
+                          notif["message"] ?? "",
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey[700],
@@ -98,7 +110,7 @@ class NotificationApp extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          notif["time"],
+                          formatDate(notif["createdAt"]),
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey[500],

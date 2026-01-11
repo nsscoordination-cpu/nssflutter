@@ -286,20 +286,20 @@ class _ReportViewPageState extends State<ReportViewPage> {
             const SizedBox(height: 16),
 
             /// 🔹 FEEDBACK BUTTON
-            Align(
-              alignment: Alignment.centerRight,
-              child: ElevatedButton.icon(
-                onPressed: () => showFeedbackDialog(index),
-                icon: const Icon(Icons.feedback_outlined),
-                label: const Text("Add Feedback"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: accentColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-            ),
+            // Align(
+            //   alignment: Alignment.centerRight,
+            //   child: ElevatedButton.icon(
+            //     onPressed: () => showFeedbackDialog(index),
+            //     icon: const Icon(Icons.feedback_outlined),
+            //     label: const Text("Add Feedback"),
+            //     style: ElevatedButton.styleFrom(
+            //       backgroundColor: accentColor,
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(12),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -18,6 +18,17 @@ class _AttendancePageState extends State<AttendancePage> {
 
   List events = [];
 
+  /// ✅ Dynamic attendance color
+  Color get attendanceColor {
+    if (percentage < 50) {
+      return Colors.red;
+    } else if (percentage < 75) {
+      return Colors.orange;
+    } else {
+      return Colors.green;
+    }
+  }
+
   Future<void> get_Attendence() async {
     try {
       final response =
@@ -89,7 +100,7 @@ class _AttendancePageState extends State<AttendancePage> {
                   ),
                   child: Column(
                     children: [
-                      /// BEAUTIFUL PROGRESS CIRCLE
+                      /// PROGRESS CIRCLE
                       SizedBox(
                         width: 170,
                         height: 170,
@@ -104,7 +115,8 @@ class _AttendancePageState extends State<AttendancePage> {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.green.withOpacity(0.35),
+                                    color:
+                                        attendanceColor.withOpacity(0.35),
                                     blurRadius: 25,
                                     spreadRadius: 5,
                                   ),
@@ -112,36 +124,16 @@ class _AttendancePageState extends State<AttendancePage> {
                               ),
                             ),
 
-                            /// Animated Ring
-                            // TweenAnimationBuilder<double>(
-                            //   tween: Tween(begin: 0, end: percentage / 100),
-                            //   duration:
-                            //       const Duration(milliseconds: 900),
-                            //   builder: (context, value, _) {
-                            //     return CircularProgressIndicator(
-                            //       value: value,
-                            //       strokeWidth: 12,
-                            //       strokeCap: StrokeCap.round,
-                            //       backgroundColor:
-                            //           Colors.grey.shade300,
-                            //       valueColor:
-                            //           const AlwaysStoppedAnimation(
-                            //               Color(0xFF2E7D32)),
-                            //     );
-                            //   },
-                            // ),
-
                             /// Center Text
                             Column(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "${percentage.toStringAsFixed(1)}%",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFF2E7D32),
+                                    color: attendanceColor,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
@@ -164,7 +156,7 @@ class _AttendancePageState extends State<AttendancePage> {
                         children: [
                           summaryCard("Total", totalDays, Colors.blue),
                           summaryCard(
-                              "Present", presentDays, Colors.green),
+                              "Present", presentDays, attendanceColor),
                           summaryCard("Absent", absentDays, Colors.red),
                         ],
                       ),
@@ -199,8 +191,8 @@ class _AttendancePageState extends State<AttendancePage> {
                                 itemCount: events.length,
                                 itemBuilder: (context, index) {
                                   final event = events[index];
-                                  final date = DateTime.parse(
-                                      event['date']);
+                                  final date =
+                                      DateTime.parse(event['date']);
 
                                   return Card(
                                     elevation: 2,
@@ -211,9 +203,10 @@ class _AttendancePageState extends State<AttendancePage> {
                                     margin: const EdgeInsets.only(
                                         bottom: 10),
                                     child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.event,
+                                      leading: CircleAvatar(
+                                        backgroundColor:
+                                            attendanceColor,
+                                        child: const Icon(Icons.event,
                                             color: Colors.white),
                                       ),
                                       title: Text(
