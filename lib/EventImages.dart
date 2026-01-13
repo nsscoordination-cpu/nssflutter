@@ -42,15 +42,25 @@ class _EventimagesState extends State<Eventimages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: const Color(0xFFFFF4E6), // warm beige
       appBar: AppBar(
         title: const Text('Event Gallery'),
         centerTitle: true,
+        backgroundColor: const Color(0xFFB4694E), // warm brown
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFFB4694E),
+              ),
+            )
           : images.isEmpty
-              ? const Center(child: Text('No images available'))
+              ? const Center(
+                  child: Text(
+                    'No images available',
+                    style: TextStyle(color: Colors.brown),
+                  ),
+                )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -62,6 +72,7 @@ class _EventimagesState extends State<Eventimages> {
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
+                          color: Color(0xFFB4694E),
                         ),
                       ),
                     ),
@@ -97,7 +108,7 @@ class _EventimagesState extends State<Eventimages> {
                                 borderRadius: BorderRadius.circular(14),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.brown.withOpacity(0.25),
                                     blurRadius: 6,
                                     offset: const Offset(0, 4),
                                   ),
@@ -112,7 +123,9 @@ class _EventimagesState extends State<Eventimages> {
                                       (context, child, progress) {
                                     if (progress == null) return child;
                                     return const Center(
-                                      child: CircularProgressIndicator(),
+                                      child: CircularProgressIndicator(
+                                        color: Color(0xFFB4694E),
+                                      ),
                                     );
                                   },
                                   errorBuilder: (_, __, ___) =>
@@ -120,6 +133,7 @@ class _EventimagesState extends State<Eventimages> {
                                     child: Icon(
                                       Icons.broken_image,
                                       size: 40,
+                                      color: Colors.brown,
                                     ),
                                   ),
                                 ),

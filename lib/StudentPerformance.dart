@@ -18,8 +18,6 @@ class _PerfomancePageState extends State<PerfomancePage> {
       final response =
           await dio.get('$url/api/student/getperformance/$userid');
 
-      print(response.data);
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         setState(() {
           performance = response.data['performance'];
@@ -41,14 +39,25 @@ class _PerfomancePageState extends State<PerfomancePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF6EFEA),
       appBar: AppBar(
         title: const Text('My Performance'),
         centerTitle: true,
+        backgroundColor: const Color(0xFFB4694E),
       ),
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFFB4694E),
+              ),
+            )
           : performance == null
-              ? const Center(child: Text('No performance data found'))
+              ? const Center(
+                  child: Text(
+                    'No performance data found',
+                    style: TextStyle(color: Color(0xFF6D4C41)),
+                  ),
+                )
               : Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -58,19 +67,19 @@ class _PerfomancePageState extends State<PerfomancePage> {
                         title: 'Participation Level',
                         value: performance!['participationLevel'],
                         icon: Icons.star,
-                        color: Colors.blue,
+                        color: const Color(0xFFB4694E),
                       ),
                       _infoCard(
                         title: 'Attendance',
                         value: '${performance!['attendance']}%',
                         icon: Icons.calendar_today,
-                        color: Colors.green,
+                        color: const Color(0xFF8D4A2F),
                       ),
                       _infoCard(
                         title: 'Remarks',
                         value: performance!['remarks'],
                         icon: Icons.notes,
-                        color: Colors.orange,
+                        color: const Color(0xFF6D4C41),
                       ),
                     ],
                   ),
@@ -88,6 +97,7 @@ class _PerfomancePageState extends State<PerfomancePage> {
     return Card(
       margin: const EdgeInsets.only(bottom: 14),
       elevation: 4,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -108,7 +118,7 @@ class _PerfomancePageState extends State<PerfomancePage> {
                     title,
                     style: const TextStyle(
                       fontSize: 14,
-                      color: Colors.grey,
+                      color: Color(0xFF6D4C41),
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -117,6 +127,7 @@ class _PerfomancePageState extends State<PerfomancePage> {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
+                      color: Color(0xFFB4694E),
                     ),
                   ),
                 ],

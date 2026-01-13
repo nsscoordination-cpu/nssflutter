@@ -23,8 +23,6 @@ class _ComplaintpageState extends State<Complaintpage> {
     super.dispose();
   }
 
-  
-
   Future<void> complaintApi() async {
     if (!formKey.currentState!.validate()) return;
 
@@ -47,6 +45,7 @@ class _ComplaintpageState extends State<Complaintpage> {
           fontSize: 16.0,
         );
 
+        Navigator.pop(context);
         _complaintController.clear();
       } else {
         Fluttertoast.showToast(
@@ -72,7 +71,9 @@ class _ComplaintpageState extends State<Complaintpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFFF4E6),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFB4694E),
         title: const Text("Submit Complaint"),
         centerTitle: true,
       ),
@@ -92,10 +93,23 @@ class _ComplaintpageState extends State<Complaintpage> {
                     hintText: 'Enter your complaint',
                     filled: true,
                     fillColor: Colors.white,
+                    labelStyle: const TextStyle(
+                      color: Color(0xFFB4694E),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFB4694E),
+                        width: 2,
+                      ),
+                    ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    prefixIcon: const Icon(Icons.report_problem_outlined),
+                    prefixIcon: const Icon(
+                      Icons.report_problem_outlined,
+                      color: Color(0xFFB4694E),
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
@@ -111,7 +125,8 @@ class _ComplaintpageState extends State<Complaintpage> {
                   child: ElevatedButton(
                     onPressed: complaintApi,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF253A52),
+                      backgroundColor:
+                          const Color(0xFFB4694E),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -121,6 +136,7 @@ class _ComplaintpageState extends State<Complaintpage> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),

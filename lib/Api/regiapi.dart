@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nss/Login.dart';
 
 final Dio dio = Dio();
-final String url = "http://192.168.1.141:8000"; // <-- ADD YOUR BASE URL HERE
-
+ String url = ""; // <-- ADD YOUR BASE URL HERE
 Future<void> Registerapi({
   required String firstname,
   required String department,
@@ -38,8 +37,6 @@ Future<void> Registerapi({
       "interests": interest,
       "regYear": RegisterYear,
       "password": Password,
-
-      // Upload image
       "Image": await MultipartFile.fromFile(
         Image.path,
         filename: Image.path.split('/').last,
@@ -52,12 +49,48 @@ Future<void> Registerapi({
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      Navigator.push(
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Registration completed successfully')),
+      );
+
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
       );
     }
+  } on DioException catch (e) {
+    if (e.response != null) {
+      final statusCode = e.response!.statusCode;
+      final message = e.response!.data["message"] ?? "";
+
+      /// ✅ Email already exists
+      if (statusCode == 409) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Email already exists")),
+        );
+      }
+      /// ❌ Validation errors
+      else if (statusCode == 400) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message.isNotEmpty ? message : "Invalid data")),
+        );
+      }
+      /// ❌ Other server errors
+      else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Registration failed. Try again")),
+        );
+      }
+    } else {
+      /// ❌ No internet / server unreachable
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Network error. Please check connection")),
+      );
+    }
   } catch (e) {
-    print("Error: $e");
+    print("Register error: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("Something went wrong")),
+    );
   }
 }

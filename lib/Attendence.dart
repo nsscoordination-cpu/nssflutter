@@ -18,7 +18,7 @@ class _AttendancePageState extends State<AttendancePage> {
 
   List events = [];
 
-  /// ✅ Dynamic attendance color
+  /// ✅ Dynamic attendance color (UNCHANGED)
   Color get attendanceColor {
     if (percentage < 50) {
       return Colors.red;
@@ -62,7 +62,10 @@ class _AttendancePageState extends State<AttendancePage> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF1565C0), Color(0xFF42A5F5)],
+            colors: [
+              Color(0xFFB4694E),
+              Color(0xFFD8A48F),
+            ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -81,9 +84,10 @@ class _AttendancePageState extends State<AttendancePage> {
                     Text(
                       "Attendance",
                       style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -94,7 +98,7 @@ class _AttendancePageState extends State<AttendancePage> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: Color(0xFFFFF4E6),
                     borderRadius:
                         BorderRadius.vertical(top: Radius.circular(30)),
                   ),
@@ -140,8 +144,9 @@ class _AttendancePageState extends State<AttendancePage> {
                                 const Text(
                                   "Attendance",
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black54),
+                                    fontSize: 14,
+                                    color: Colors.brown,
+                                  ),
                                 ),
                               ],
                             ),
@@ -154,7 +159,8 @@ class _AttendancePageState extends State<AttendancePage> {
                       /// SUMMARY CARDS
                       Row(
                         children: [
-                          summaryCard("Total", totalDays, Colors.blue),
+                          summaryCard(
+                              "Total", totalDays, const Color(0xFFB4694E)),
                           summaryCard(
                               "Present", presentDays, attendanceColor),
                           summaryCard("Absent", absentDays, Colors.red),
@@ -169,8 +175,10 @@ class _AttendancePageState extends State<AttendancePage> {
                         child: Text(
                           "Attended Events",
                           style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFB4694E),
+                          ),
                         ),
                       ),
 
@@ -183,8 +191,9 @@ class _AttendancePageState extends State<AttendancePage> {
                                 child: Text(
                                   "No events found",
                                   style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black54),
+                                    fontSize: 16,
+                                    color: Colors.brown,
+                                  ),
                                 ),
                               )
                             : ListView.builder(
@@ -205,7 +214,7 @@ class _AttendancePageState extends State<AttendancePage> {
                                     child: ListTile(
                                       leading: CircleAvatar(
                                         backgroundColor:
-                                            attendanceColor,
+                                            const Color(0xFFB4694E),
                                         child: const Icon(Icons.event,
                                             color: Colors.white),
                                       ),
@@ -252,16 +261,19 @@ class _AttendancePageState extends State<AttendancePage> {
             children: [
               Text(
                 title,
-                style:
-                    const TextStyle(fontSize: 14, color: Colors.black54),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.brown,
+                ),
               ),
               const SizedBox(height: 6),
               Text(
                 value.toString(),
                 style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: color),
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
               ),
             ],
           ),

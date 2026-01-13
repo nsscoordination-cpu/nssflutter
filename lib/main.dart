@@ -9,6 +9,7 @@ import 'package:nss/Profile.dart';
 import 'package:nss/Register.dart';
 import 'package:nss/Report.dart';
 import 'package:nss/StudentPerformance.dart';
+import 'package:nss/ipscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home:LoginPage()
+      home:IpScreen()
     );
   }
 }

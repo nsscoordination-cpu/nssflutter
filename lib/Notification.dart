@@ -10,8 +10,8 @@ class NotificationApp extends StatefulWidget {
 }
 
 class _NotificationAppState extends State<NotificationApp> {
-  final Color primaryColor = const Color(0xFF1565C0);
-  final Color accentColor = const Color(0xFF42A5F5);
+  final Color primaryColor = const Color(0xFFB4694E); // warm brown
+  final Color accentColor = const Color(0xFFD08C60); // soft accent
 
   // Notification list
   List<Map<String, dynamic>> notifications = [];
@@ -48,7 +48,7 @@ class _NotificationAppState extends State<NotificationApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: const Color(0xFFFFF4E6), // warm beige
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text("Notifications"),
@@ -60,7 +60,7 @@ class _NotificationAppState extends State<NotificationApp> {
                 "No Notifications Yet",
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.grey[600],
+                  color: Colors.brown.shade600,
                 ),
               ),
             )
@@ -71,8 +71,9 @@ class _NotificationAppState extends State<NotificationApp> {
                 final notif = notifications[index];
 
                 return Card(
-                  elevation: 3,
+                  elevation: 4,
                   margin: const EdgeInsets.only(bottom: 16),
+                  color: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -81,12 +82,12 @@ class _NotificationAppState extends State<NotificationApp> {
                     leading: Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: accentColor.withOpacity(0.15),
+                        color: accentColor.withOpacity(0.18),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
                         Icons.notifications,
-                        color: accentColor,
+                        color: primaryColor,
                       ),
                     ),
                     title: Text(
@@ -105,7 +106,7 @@ class _NotificationAppState extends State<NotificationApp> {
                           notif["message"] ?? "",
                           style: TextStyle(
                             fontSize: 15,
-                            color: Colors.grey[700],
+                            color: Colors.brown.shade700,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -113,7 +114,7 @@ class _NotificationAppState extends State<NotificationApp> {
                           formatDate(notif["createdAt"]),
                           style: TextStyle(
                             fontSize: 13,
-                            color: Colors.grey[500],
+                            color: Colors.brown.shade500,
                           ),
                         ),
                       ],

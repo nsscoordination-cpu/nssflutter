@@ -6,7 +6,7 @@ import 'package:nss/Api/regiapi.dart';
 
 class FeedbackPage extends StatefulWidget {
   String? id;
-   FeedbackPage({super.key,required this.id});
+  FeedbackPage({super.key, required this.id});
 
   @override
   State<FeedbackPage> createState() => _FeedbackPageState();
@@ -27,7 +27,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
         const SnackBar(content: Text("Feedback submitted successfully")),
       );
 
-      // Clear form
       nameController.clear();
       emailController.clear();
       feedbackController.clear();
@@ -35,9 +34,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
         rating = 0;
       });
     } else if (rating == 0) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Please select a rating")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please select a rating")),
+      );
     }
   }
 
@@ -45,7 +44,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
     return IconButton(
       icon: Icon(
         Icons.star,
-        color: index <= rating ? Colors.amber : Colors.grey,
+        color:
+            index <= rating ? const Color(0xFFB4694E) : Colors.grey,
       ),
       onPressed: () {
         setState(() {
@@ -54,6 +54,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       },
     );
   }
+
   Future<void> feedbackApi() async {
     if (!_formKey.currentState!.validate()) return;
 
@@ -63,7 +64,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
         data: {
           'feedback': feedbackController.text,
           'eventId': widget.id,
-          'rating':rating
+          'rating': rating,
         },
       );
 
@@ -78,6 +79,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
         );
 
         feedbackController.clear();
+        Navigator.pop(context);
+        setState(() {
+          rating = 0;
+        });
       } else {
         Fluttertoast.showToast(
           msg: "Complaint sending failed",
@@ -99,14 +104,15 @@ class _FeedbackPageState extends State<FeedbackPage> {
     }
   }
 
- 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Feedback"), centerTitle: true),
+      backgroundColor: const Color(0xFFFFF4E6),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFB4694E),
+        title: const Text("Feedback"),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -116,28 +122,46 @@ class _FeedbackPageState extends State<FeedbackPage> {
             children: [
               const Text(
                 "We value your feedback",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFFB4694E),
+                ),
               ),
 
               const SizedBox(height: 20),
 
-              const SizedBox(height: 16),
-
               const Text(
                 "Rate Us",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFFB4694E),
+                ),
               ),
 
-              Row(children: List.generate(5, (index) => buildStar(index + 1))),
+              Row(
+                children:
+                    List.generate(5, (index) => buildStar(index + 1)),
+              ),
 
               const SizedBox(height: 16),
 
               TextFormField(
                 controller: feedbackController,
                 maxLines: 4,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: "Your Feedback",
-                  border: OutlineInputBorder(),
+                  labelStyle:
+                      const TextStyle(color: Color(0xFFB4694E)),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: const Color(0xFFB4694E), width: 2),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 validator: (value) =>
                     value!.isEmpty ? "Enter your feedback" : null,
@@ -149,8 +173,24 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: (){feedbackApi();},
-                  child: const Text("Submit Feedback"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        const Color(0xFFB4694E),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () {
+                    feedbackApi();
+                  },
+                  child: const Text(
+                    "Submit Feedback",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
               ),
             ],
